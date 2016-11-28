@@ -3,6 +3,7 @@ var drawRadius = 100;
 var initRadius = 10;
 var speed = 0.9
 var currentCircles = [];
+var color = d3.scale.category20();
 
 var svgHeight = 600;
 var svgWidth = 600;
@@ -34,8 +35,8 @@ var circle = svg.selectAll("circle")
   .append("circle")
     .attr('r', function(d){ return d.get('cr') })
     .attr('cx', function(d){ return d.get('x') })
-    .attr('cy', function(d){ return d.get('y') }) 
-    .attr('fill', function(i) { return i.get('id') % 2 ? 'white' : 'black'})
+    .attr('cy', function(d){ return d.get('y') })
+    .attr('fill', function(i) { return color(i.get('id'));/*i.get('id') % 2 ? 'white' : 'black'*/})
 	.each(pulse);
 
 function pulse() {
@@ -44,7 +45,7 @@ function pulse() {
 		.duration(timeparam)
 		.ease('sine')
 		.attrTween('transform', translateFn())
-		.each("end", repeat);	
+		.each("end", repeat);
 	})();
 }
 
