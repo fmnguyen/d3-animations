@@ -72,6 +72,7 @@ var circle = svg.selectAll("circle")
     			.on('start', repeat) // after all this is done, we want to repeat this animation
     });
 
+
 function opacityFn() {
 	return function(d) {
 		return function(t) {
