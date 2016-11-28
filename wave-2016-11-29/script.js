@@ -44,7 +44,7 @@ var g = svg.selectAll('g')
 		.enter()
 		.append('g')
 			.attr('transform', function(d) {
-				return 'translate(' + d * colWidth + ', 0)'
+				return 'translate(' + d * colWidth + ', 0)scale(0)'
 			});
 
 for (var i = 1; i <= circleCount; i++) {
@@ -91,8 +91,8 @@ g.transition(t)
 function scaleFn() {
 	return function(d) {
 		return function(t) {
-			var scale = Math.abs(_cos(t * π))
-			return 'translate(' + d * colWidth + ', 0)scale(' + scale + ')'
+			var scale = Math.abs(_sin(t * π * period))
+			return 'translate(' + (d * colWidth) + ',' + (-svgHeight / 2 * (scale - 1) ) + ')scale(' + scale + ')'
 		}
 	}
 }
@@ -100,7 +100,7 @@ function scaleFn() {
 function opacityFn() {
 	return function(d) {
 		return function(t) {
-			return 0.1 + Math.abs(_cos(t * π * period))
+			return 0.1 + Math.abs(_sin(t * π * period))
 		}
 	}
 }
