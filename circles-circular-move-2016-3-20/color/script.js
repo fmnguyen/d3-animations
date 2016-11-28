@@ -36,7 +36,7 @@ var circle = svg.selectAll("circle")
     .attr('r', function(d){ return d.get('cr') })
     .attr('cx', function(d){ return d.get('x') })
     .attr('cy', function(d){ return d.get('y') })
-    .attr('fill', function(i) { return color(i.get('id'));/*i.get('id') % 2 ? 'white' : 'black'*/})
+    .attr('fill', function(i) { return color(i.get('id')); })
 	.each(pulse);
 
 function pulse() {
