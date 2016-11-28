@@ -1,7 +1,7 @@
 // using d3.v4.min.js
 var circleCount = 10;
 var drawRadius = 100;
-var initRadius = 15;
+var initRadius = 20;
 var timeparam = 1500;
 var speed = 2;
 var π = Math.PI;
@@ -42,14 +42,14 @@ for (var i = 1; i <= circleCount; i++) {
 		t_circle.set('cr', initRadius);
 		// initialize each circle to be evenly placed around our draw radius
 		t_circle.set('angle', 3 * π / 2 + (2 * π * i / circleCount));
-		t_circle.set('x', svgWidth / 2 + drawRadius * _cos((3 * π / 2 + (2 * π * i / circleCount))));
-		t_circle.set('y', svgHeight / 2 + drawRadius * _sin((3 * π / 2 + (2 * π * i / circleCount))))
+		t_circle.set('x', svgWidth / 2 + drawRadius * _cos(3 * π / 2 + (2 * π * i / circleCount)));
+		t_circle.set('y', svgHeight / 2 + drawRadius * _sin(3 * π / 2 + (2 * π * i / circleCount)));
 		currentCircles.push(t_circle);
 }
 
 /**
  * IDEA
- * instead of rotating each x/y point of each circle, rotate the svgg object that it stays in instead
+ * instead of rotating each x/y point of each circle, rotate the svg object that it stays in instead
  */
 
 var circle = svg.selectAll("circle")
@@ -59,40 +59,25 @@ var circle = svg.selectAll("circle")
     .attr('r', function(d){ return d.get('cr') })
     .attr('cx', function(d){ return d.get('x') })
     .attr('cy', function(d){ return d.get('y') })
-    .attr('fill', function(d) { return '#FF9896'/*color(d.get('id'))*/ })
+    .attr('fill', function(d) { return '#C3423B'/*color(d.get('id'))*/ })
     .transition(t)
     .delay(function(d){ return d.get('id') * (timeparam * speed / circleCount); })
     .on('start', function repeat() { // where we're repeating
-    	// append the current onto the parent so that we reset our z-index
-    	//var mine = this.parentNode.appendChild(this);
-    	// while our current is active, we want to move our circle and scale the size
+    	// while our current is active, we want to move scale the size
+    	// our rotation animation is being handled by our css animation
     	d3.active(this)
-    			//.attrTween('transform', translateFn())
     			.attrTween('r', sizeFn())
+    			.attrTween('opacity', opacityFn())
     		.transition(t)
     			.on('start', repeat) // after all this is done, we want to repeat this animation
     });
 
-function rotateFn() {
+function opacityFn() {
 	return function(d) {
 		return function(t) {
-			var t_x, t_y;
-			var t_angle = (2 * π) * t;
-			return "rotate(" + (t_angle) + ")" ;
-		};
-	};
-}
-
-function translateFn() {
-	return function(d) {
-		return function(t) {
-			var t_x, t_y;
-			var t_angle = (2 * π) * t;
-			var t_x = svgWidth / 2 - d.get('x') + drawRadius * _cos(t_angle + d.get('angle'));
-			var t_y = svgHeight / 2 - d.get('y') + drawRadius * _sin(t_angle + d.get('angle'));
-			return "translate(" + (t_x) + "," + (t_y) + ")" ;
-		};
-	};
+			return 0.1 + Math.abs(_cos(t * π))
+		}
+	}
 }
 
 /**
