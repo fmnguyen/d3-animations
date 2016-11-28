@@ -1,5 +1,5 @@
 // Parameters to mess around with to change how the sine wave moves
-var circleCount = 45,
+var circleCount = 60,
 	col = 60,
  	initRadius = 2,
  	colWidth = 10,
