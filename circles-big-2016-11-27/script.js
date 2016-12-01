@@ -64,10 +64,10 @@ function translateFn() {
 	return function(d) {
 		return function(t) {
 			var t_x, t_y;
-			var t_angle = (2 * π) * t * 1.5;
-			var t_x = svgWidth / 2 - d.get('x') + drawRadius * _cos(t_angle + d.get('angle'));
-			var t_y = svgHeight / 2 - d.get('y') + drawRadius * _sin(t_angle + d.get('angle'));
-			return "translate(" + (t_x) + "," + (t_y) + ")" ;
+			var θ = (2 * π) * t * 1.5;
+			var t_x = svgWidth / 2 - d.get('x') + drawRadius * _cos(θ + d.get('angle'));
+			var t_y = svgHeight / 2 - d.get('y') + drawRadius * _sin(θ + d.get('angle'));
+			return "translate(" + [t_x , t_y] + ")" ;
 		};
 	};
 }
@@ -81,7 +81,8 @@ function sizeFn() {
 		return function(t) {
 			// add π / 2 to shift the starting point
 			// otherwise, want to take the time with respect to smaller sub sections
-			return 100 * initRadius * Math.abs(_cos(t * π / 2 + π / 2));
+			var θ = t * π / 2 + π / 2
+			return 100 * initRadius * Math.abs(_cos(θ));
 		}
 	}
 }

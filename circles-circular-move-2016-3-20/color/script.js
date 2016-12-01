@@ -57,7 +57,7 @@ function translateFn() {
 			var t_x = drawRadius * Math.cos(t_angle + d.get('angle'));
 			var t_y = drawRadius * Math.sin(t_angle + d.get('angle'));
 
-			return "translate(" + (t_x) + "," + (t_y) + ")";
+			return "translate(" + [t_x, t_y] + ")";
 		};
 	};
 }

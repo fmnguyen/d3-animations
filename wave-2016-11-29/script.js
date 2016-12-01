@@ -78,7 +78,9 @@ function scaleFn() {
 	return function(d) {
 		return function(t) {
 			var scale = 0.15 + Math.abs(amp * _sin(ß * (t * π)));
-			return 'translate(' + ((svgWidth / 2 - col * colWidth / 2) + (d * colWidth)) + ',' + ((xCenter + initRadius * 2) + ((-gHeight / 2) * (scale - 1))) + ')scale(' + scale + ')'
+			var x = (svgWidth / 2 - col * colWidth / 2) + (d * colWidth)
+			var y = ((xCenter + initRadius * 2) + ((-gHeight / 2) * (scale - 1)))
+			return 'translate(' + [x , y] + ')scale(' + scale + ')';
 		}
 	}
 }
