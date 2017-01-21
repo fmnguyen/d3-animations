@@ -1,7 +1,7 @@
 var circleCount = 10;
 var drawRadius = 100;
 var initRadius = 10;
-var speed = 0.9
+var speed = 1.5
 var currentCircles = [];
 
 var svgHeight = 600;
@@ -26,7 +26,7 @@ for (var i = 1; i <= circleCount; i++) {
 		currentCircles.push(t_circle);
 }
 
-var timeparam = 1500;
+var timeparam = 1500 * speed;
 
 var circle = svg.selectAll("circle")
     .data(currentCircles, function(d){ return d.get('id') })
