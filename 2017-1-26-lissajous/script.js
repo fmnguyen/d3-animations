@@ -1,7 +1,9 @@
 var n = 231,		 // number of wedges
 	w = h = 600, // width and height
 	a = 7,
-	b = 9;
+	b = 9,
+	row = col = 7,
+	r = w / row;
 
 var time = 500, //2000,
 	speed = 2;
@@ -19,7 +21,11 @@ function _sin(val) {
 	return Math.sin(val);
 }
 
-var range = d3.range(0, 4 * π, 0.01)
+var range = d3.range(0, 4 * π, 0.05)
+var data = d3.range(0, row * col)
+			.map(function(d){
+				return { x: d % row + 1, y: Math.floor(d / col) + 1 }
+			});
 
 // create our background svg parent
 var svg = d3.select('.background').append('svg')
@@ -27,17 +33,25 @@ var svg = d3.select('.background').append('svg')
 			.attr('height', h)
 			.style('background-color', 'transparent')
 
-var lissajous = svg.append('path')
+var lissajous = svg.selectAll('path')
+					.data(data)
+				.enter().append('path')
+				.attr('transform', function(d){
+					console.log(d)
+					return 'translate(' + [(d.x - 1) * r, (d.y - 1) * r] + ')'
+				})
 				.attr('fill', 'none')
 				.attr('stroke', 'black')
 				.attr('stroke-width', 1)
 				.attr('stroke-opacity', 0.8)
-				.attr('d', 'M' + range.map(function(p) {
-					return [
-						0.4 * w * _sin(a * p) + w / 2,
-						0.4 * h * _sin(b * p) + h / 2
-					]
-				}).join("L"));
+				.attr('d', function(d){
+					return ('M' + range.map(function(p) {
+						return [
+							0.4 * r * _sin(d.x * p) + r / 2,
+							0.4 * r * _sin(d.y * p) + r / 2
+						]
+					}).join("L"))
+				});
 
 function update(a, b) {
 	lissajous.attr('d', 'M' + range.map(function(p) {
