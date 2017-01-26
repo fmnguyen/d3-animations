@@ -8,10 +8,6 @@ var n = 231,		 // number of wedges
 var time = 500, //2000,
 	speed = 2;
 
-var t = d3.transition()
-			.duration(time * speed)
-			.ease(d3.easeSinInOut)
-
 // just some nicer math functions
 var π = Math.PI;
 function _cos(val) {
@@ -64,42 +60,19 @@ var lenses = svg.selectAll('path')
 					}
 				})
 
-// add a transition to each of the group objects to transform it's scale
-// as a function of time
-lenses.transition(t)
-	.delay(function(d) {
-		var x = row / 2 - d.x - 1,
-			y = row / 2 - d.y + 4;
-		console.log('x: ' + x)
-		console.log('y: ' + y)
+d3.timer(function(t) {
+	lenses.attr('transform', function(d) {
+		var start_θ = π / 2;
+		var evenRow = d.y % 2 === 0;
 
-		return  Math.sqrt(x*x + y*y) * 175;
-	})
-	.on('start', function repeat() {
-		d3.active(this)
-				.attrTween('transform', rotateFn(0))
-			.transition(t)
-			.delay(2000)
-				.attrTween('transform', rotateFn(-π / 2))
-			.transition(t)
-				.delay(2000)
-				.on('start', repeat) // after all this is done, we want to repeat this animation
+		var  θ = start_θ + (t / 2000) * π / 2, 							// angle = time (between 0 and 1) * π / 2 (we want to rotate our shape by π / 2 rotations)
+			 ƒ = 90 * _sin(θ),
+			x0 = D * d.x,										// starting is radius times el, plus the diameter
+			y0 = evenRow ? D * d.y / 2	 : 	 D * (d.y - 1) / 2;	// y0 = radius in height, plus r times the data / rows
+
+		if(evenRow)
+			return 'rotate(' + [ƒ, x0 + r, y0] + ')';
+		else
+			return 'rotate(' + [ƒ, x0, y0 + r] + ')';
 	});
-
-function rotateFn(start_θ) {
-	return function(d) {
-		return function(t) {
-			var evenRow = d.y % 2 === 0;
-
-			var  θ = start_θ + t * π / 2, 							// angle = time (between 0 and 1) * π / 2 (we want to rotate our shape by π / 2 rotations)
-				 ƒ = 90 * _sin(θ),
-				x0 = D * d.x,										// starting is radius times el, plus the diameter
-				y0 = evenRow ? D * d.y / 2	 : 	 D * (d.y - 1) / 2;	// y0 = radius in height, plus r times the data / rows
-
-			if(evenRow)
-				return 'rotate(' + [ƒ, x0 + r, y0] + ')';
-			else
-				return 'rotate(' + [ƒ, x0, y0 + r] + ')';
-		}
-	}
-}
+})

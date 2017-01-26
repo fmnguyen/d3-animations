@@ -1,9 +1,7 @@
 var n = 231,		 // number of wedges
 	w = h = 600, // width and height
-	r = h / 20,	 // 50
-	D = r * 2,	 // 100
-	col = w / D + 1, // 7
-	row = h / D + 1; // 7
+	a = 1,
+	b = 2;
 
 var time = 500, //2000,
 	speed = 2;
@@ -33,13 +31,11 @@ var svg = d3.select('.background').append('svg')
 			.attr('height', h)
 			.style('background-color', 'transparent')
 
-var lenses = svg.selectAll('path')
-				.data(data)
-			.enter()
-			.append('path')
+var curve = svg.append('path')
+				.attr('fill', 'none')
 				.attr('stroke', 'black')
 				.attr('stroke-width', 1)
-				.attr('fill', 'black')
+				.attr('stroke-opacity', 0.8)
 				.attr('d', function(d, i) {
 					var evenRow = d.y % 2 === 0;
 					var x0 = D * d.x,									// starting is radius times el, plus the diameter
@@ -73,7 +69,7 @@ lenses.transition(t)
 		console.log('x: ' + x)
 		console.log('y: ' + y)
 
-		return  Math.sqrt(x*x + y*y) * 175;
+		return  Math.sqrt(x*x + y*y) * 175z;
 	})
 	.on('start', function repeat() {
 		d3.active(this)
