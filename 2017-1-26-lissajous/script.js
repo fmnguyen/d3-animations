@@ -1,9 +1,8 @@
-var n = 231,		 // number of wedges
-	w = h = 600, // width and height
-	row = col = 7,
+var w = h = 600, // width and height
+	row = col = 10,
 	r = w / row;
 
-var time = 500, //2000,
+var time = 500,
 	speed = 2;
 
 var t = d3.transition()
@@ -19,7 +18,7 @@ function _sin(val) {
 	return Math.sin(val);
 }
 
-var range = d3.range(0, 3 * π, 0.05)
+var range = d3.range(0, 3 * π, 0.01);
 
 var data = d3.range(0, row * col)
 			.map(function(d){
@@ -43,10 +42,8 @@ var lissajous = svg.selectAll('path')
 				.attr('stroke', 'black')
 				.attr('stroke-width', 1)
 				.attr('stroke-opacity', 0.8)
-				.attr('d', function(d){
+				.attr('d', function(d) {
 					return ('M' + range.map(function(p) {
-						var a = _sin(d.x)
-
 						return [
 							0.4 * r * _sin(d.x * p) + r / 2,
 							0.4 * r * _sin(d.y * p) + r / 2

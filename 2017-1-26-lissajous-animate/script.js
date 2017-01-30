@@ -1,7 +1,9 @@
 var n = 231,		 // number of wedges
 	w = h = 600, // width and height
 	row = col = 7,
-	r = w / row;
+	r = w / row
+	a = 5,
+	b = 4;
 
 var time = 500, //2000,
 	speed = 2;
@@ -19,7 +21,7 @@ function _sin(val) {
 	return Math.sin(val);
 }
 
-var range = d3.range(0, 3 * π, 0.05)
+var range = d3.range(0, 3 * π, 0.01)
 
 var data = d3.range(0, row * col)
 			.map(function(d){
@@ -37,6 +39,13 @@ var lissajous = svg.append('path')
 				.attr('stroke', 'black')
 				.attr('stroke-width', 1)
 				.attr('stroke-opacity', 0.8)
+				.attr('d', 'M' + range.map(function(p) {
+					return [
+						0.4 * w * _sin(a * p) + w / 2,
+						0.4 * h * _sin(b * p) + h / 2
+					]
+				}).join("L"));
+
 
 function update(a, b) {
 	lissajous.attr('d', 'M' + range.map(function(p) {
@@ -49,11 +58,11 @@ function update(a, b) {
 
 d3.timer(function(t){
 	lissajous.attr('d', 'M' + range.map(function(p) {
-		var a = (_sin(t / 20000) + 1),
-			b = (_cos(t / 20000) + 1)
+		var a = 5,
+			b = 4;
 		return [
-			0.4 * w * _sin(a * p * t / 4000 + _cos(t / 15000)) + w / 2,
-			0.4 * h * _sin(b * p * t / 4000) + h / 2
+			0.4 * w * _sin(a * p + _cos(t / 1600)) + w / 2,
+			0.4 * h * _sin(b * p) + h / 2
 		]
 	}).join("L"));
 });
