@@ -1,7 +1,7 @@
 var n = 231,		 // number of wedges
 	w = h = 600, // width and height
 	row = col = 7,
-	r = w / row
+	r = w / row;
 
 var time = 500, //2000,
 	speed = 2;
@@ -23,7 +23,7 @@ var range = d3.range(0, 3 * π, 0.01)
 
 var data = d3.range(0, row * col)
 			.map(function(d){
-				return { x: d % row + 1, y: Math.floor(d / col) + 1 }
+				return { a: d % row + 1, b: Math.floor(d / col) + 1 }
 			});
 
 // create our background svg parent
@@ -32,31 +32,34 @@ var svg = d3.select('.background').append('svg')
 			.attr('height', h)
 			.style('background-color', 'transparent')
 
-var lissajous = svg.append('path')
-				.attr('fill', 'none')
-				.attr('stroke', 'black')
-				.attr('stroke-width', 1)
-				.attr('stroke-opacity', 0.8)
-
-
-function update(a, b) {
-	lissajous.attr('d', 'M' + range.map(function(p) {
-		return [
-			0.4 * w * _sin(a * p) + w / 2,
-			0.4 * h * _sin(b * p) + h / 2
-		]
-	}).join("L"));
-}
+var lissajous = svg.selectAll('path')
+					.data(data)
+				.enter().append('path')
+					.attr('fill', 'none')
+					.attr('stroke', 'black')
+					.attr('stroke-width', 1)
+					.attr('stroke-opacity', 0.8)
+					.attr('transform', function(d) {
+						return 'translate(' + [(d.a - 1) * r, (d.b - 1) * r] + ')'
+					})
+					.attr('d', function(d) {
+						return 'M' + range.map(function(p) {
+							return [
+								0.4 * r * _sin(d.a * p) + r / 2,
+								0.4 * r * _sin(d.b * p) + r / 2
+							]
+						}).join("L")
+					});
 
 d3.timer(function(t){
-	lissajous.attr('d', 'M' + range.map(function(p) {
-		var a = _sin(t / 10000) / 2,
-			b = _cos(t / 10000) / 2;
-		return [
-			0.4 * w * _sin(a * p * t / 10000 + _cos(t / 16000)) + w / 2,
-			0.4 * h * _sin(b * p * t / 10000) + h / 2
-		]
-	}).join("L"));
+	lissajous.attr('d', function(d) {
+		return 'M' + range.map(function(p) {
+			return [
+				0.4 * r * _sin(d.a * p + _cos(t / 1600)) + r / 2,
+				0.4 * r * _sin(d.b * p) + r / 2
+			]
+		}).join("L")
+	});
 });
 
 // add a transition to each of the group objects to transform it's scale

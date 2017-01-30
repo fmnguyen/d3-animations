@@ -64,25 +64,3 @@ var lissajous = svg.selectAll('path')
 					.attr('stroke-width', 1)
 					.attr('stroke-opacity', 0.8)
 					.attr('d', lineFunction)
-
-// var lissajous = svg.selectAll('path')
-// 					.data(data)
-// 				.enter()
-// 				.append('path')
-// 				.attr('transform', function(d){
-// 					return 'translate(' + [(d.x - 1) * r, (d.y - 1) * r] + ')'
-// 				})
-// 				.attr('fill', 'none')
-// 				.attr('stroke', 'black')
-// 				.attr('stroke-width', 1)
-// 				.attr('stroke-opacity', 0.8)
-// 				.attr('d', function(d) {
-// 					return ('M' + range.map(function(p) {
-// 						return [
-// 							0.4 * r * _sin(d.x * p) + r / 2,
-// 							0.4 * r * _sin(d.y * p) + r / 2
-// 						]
-// 					}).join("L"))
-// 				});
-
-
