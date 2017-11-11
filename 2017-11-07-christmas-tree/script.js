@@ -31,7 +31,7 @@ var svg = d3.select('body').append('svg')
 
 var data = d3.range(0, n)
 			.map(function(n) {
-				return d3.range(0, n + 3)
+				return d3.range(0, n + 3) // need n + 3 so we have 2 extra nodes to be able to iterate through
 					.map(function(d) {
 						return { n: d + 1 }
 					})
@@ -43,18 +43,18 @@ var g = svg.selectAll('g')
 	.append('g')
 	.attr('transform', function(d, i) {
 		return 'translate(' + (w / 2 - (i+1) * r - 2 * i - r) + ',' + ((D + 8) * i + 70) + ')'
-	})
+	}) // some translating for each of the grouped elements. Just half the width minus i*r many circles, then manual scaling for vertical axis
 
 function update(data) {
 
 	var t = d3.transition()
-	    	.duration(750);
+	    	.duration(1250);
 
 	var row_group = g.selectAll('circle')
 
 	row_group.data(function(d, i) {
 			return d.map(function(m) {
-				if (d.length % 2 == 0)
+				if (d.length % 2 == 0) // for every second row, we want to start at 0 instead of 1
 					return { n: m.n - 1, row: i + 1 };
 				return { n: m.n, row: i + 1 };
 			});
@@ -76,10 +76,7 @@ function update(data) {
 		.merge(row_group)
 		.transition(t)
 			.delay(function(d, i) {
-				console.log(d)
-				if (d.row % 2 == 0)
-					return 100 + d.row * 5;
-				return d.row * 5;
+				return d.row * 20;
 			})
 			.attr('cx', function(d, i) {
 				return D * d.n / 2 + d.n * r + 4 * d.n;
@@ -111,4 +108,4 @@ d3.interval(function() {
 		})
 	})
 	update(data)
-}, 3000);
+}, 1750);
