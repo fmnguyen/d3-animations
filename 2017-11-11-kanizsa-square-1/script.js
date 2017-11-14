@@ -64,7 +64,7 @@ var arc = d3.arc()
 function update() {
 	var t = d3.transition()
 			.ease(d3.easeLinear)
-	    	.duration(1250);
+	    	.duration(2500);
 	var v = d3.transition()
 			.ease(d3.easeLinear)
 	    	.duration(1);
@@ -76,18 +76,19 @@ function update() {
 			.attr('class', 'arc')
 			.attr('d', arc)
 			.attr('transform', function(d) {
-				return 'translate(' + (d.a * D) + ',' + (d.b * D) + ')rotate(360)';
+				return 'translate(' + (d.a * D) + ',' + (d.b * D) + ')rotate(0)';
 			})
 		.merge(path)
 		.transition(t)
 			.attr('transform', function(d) {
-				return 'translate(' + (d.a * D) + ',' + (d.b * D) + ')rotate(0, 0, 0)';
+				return 'translate(' + (d.a * D) + ',' + (d.b * D) + ')rotate(360, 0, 0)';
 			})
 		.transition(t)
 			.attr('transform', function(d) {
 				return 'translate(' + (d.a * D) + ',' + (d.b * D) + ')rotate(180, 0, 0)';
 			})
-		.transition(v)
+		.transition(t)
+			.delay(30)
 			.attr('transform', function(d) {
 				return 'translate(' + (d.a * D) + ',' + (d.b * D) + ')rotate(359, 0, 0)';
 			})
@@ -97,7 +98,7 @@ update()
 
 d3.interval(function() {
 	update();
-}, 2500)
+}, 5030)
 
 // Potential timer function that's more reliant on time
 // d3.timer(function(t) {
