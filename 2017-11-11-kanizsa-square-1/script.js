@@ -13,7 +13,8 @@ var n = 15,		 // number of rows
 	r = h / 50,
 	D = r * 2,
 	col = w / D - 1,
-	row = h / D - 1;
+	row = h / D - 1,
+	padding = 0;
 
 var π = Math.PI;
 
@@ -76,21 +77,21 @@ function update() {
 			.attr('class', 'arc')
 			.attr('d', arc)
 			.attr('transform', function(d) {
-				return 'translate(' + (d.a * D) + ',' + (d.b * D) + ')rotate(0)';
+				return 'translate(' + (d.a * D + d.a * padding) + ',' + (d.b * D + d.b * padding) + ')rotate(0)';
 			})
 		.merge(path)
 		.transition(t)
 			.attr('transform', function(d) {
-				return 'translate(' + (d.a * D) + ',' + (d.b * D) + ')rotate(360, 0, 0)';
+				return 'translate(' + (d.a * D + d.a * padding) + ',' + (d.b * D + d.b * padding) + ')rotate(360, 0, 0)';
 			})
 		.transition(t)
 			.attr('transform', function(d) {
-				return 'translate(' + (d.a * D) + ',' + (d.b * D) + ')rotate(180, 0, 0)';
+				return 'translate(' + (d.a * D + d.a * padding) + ',' + (d.b * D + d.b * padding) + ')rotate(180, 0, 0)';
 			})
 		.transition(t)
 			.delay(30)
 			.attr('transform', function(d) {
-				return 'translate(' + (d.a * D) + ',' + (d.b * D) + ')rotate(359, 0, 0)';
+				return 'translate(' + (d.a * D + d.a * padding) + ',' + (d.b * D + d.b * padding) + ')rotate(359, 0, 0)';
 			})
 }
 
