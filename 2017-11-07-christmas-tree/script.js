@@ -1,14 +1,11 @@
-// using d3.v4.min.js
-
 var n = 15,		 // number of rows
-	m = 15,
 	w = h = 600, // width and height
 	r = h / 50,
-	D = r * 2,	 // 100
-	col = w / D + 1, // 7
-	row = h / D + 1; // 7
+	D = r * 2,
+	col = w / D + 1,
+	row = h / D + 1;
 
-var time = 500, //2000,
+var time = 500,
 	speed = 2;
 
 var π = Math.PI;
@@ -22,16 +19,13 @@ function sin(val) {
 	return Math.sin(val);
 }
 
-var svgHeight = 600;
-var svgWidth = 600;
-
 var svg = d3.select('body').append('svg')
-			.attr('width', svgHeight)
-			.attr('height', svgWidth)
+			.attr('width', w)
+			.attr('height', h)
 
 var data = d3.range(0, n)
 			.map(function(n) {
-				return d3.range(0, n + 3) // need n + 3 so we have 2 extra nodes to be able to iterate through
+				return d3.range(0, n + 3) // need n + 3 so we have 2 extra circles to be able to iterate through
 					.map(function(d) {
 						return { n: d + 1 }
 					})
@@ -60,36 +54,32 @@ function update(data) {
 			});
 		})
 		.enter().append('circle')
-		.attr('r', 0)
+		.attr('r', 0) // when first appending our circles, start at r = 0
 		.attr('cx', function(d, i) {
 			if (d.row % 2 == 0) {
-				if (d.n > d.row)
-					return D * d.row / 2 + d.row * r + 4 * d.row - r;
 				return D * d.n / 2 + d.n * r + 4 * d.n - r;
 			} else {
-				if (d.n == 0)
-					return D * 1 / 2 + 1 * r + 4 * 1 + r;
 				return D * d.n / 2 + d.n * r + 4 * d.n + r;
 			}
 		})
 		.attr('fill', function(d) { return d.row % 2 == 0 ? 'red' : 'green'})
-		.merge(row_group)
+		.merge(row_group) // merge / update in our general d3 update pattern
 		.transition(t)
 			.delay(function(d, i) {
-				return d.row * 20;
+				return d.row * 20; // look @ jeef heer's paper on animation perception for ideal delay
 			})
 			.attr('cx', function(d, i) {
 				return D * d.n / 2 + d.n * r + 4 * d.n;
 			})
 			.attr('r', function(d, i) {
-				if(d.n > d.row || d.n == 0)
+				if(d.n > d.row || d.n == 0) // if first or last, make our circle disappear
 					return 0
 				else
 					return r
 			})
 }
 
-update(data);
+update(data); // initialize our chart
 
 d3.interval(function() {
 	data.forEach(function(d) {

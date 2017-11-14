@@ -1,3 +1,6 @@
+path {
+  shape-rendering: geometricPrecision; }
+
 .background {
   position: absolute;
   width: 600px;

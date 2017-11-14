@@ -65,7 +65,6 @@ g.transition(t)
 	.delay(function(d){ return d * (time * speed / col); })
 	.on('start', function repeat() { // where we're repeating
 		// while our current is active, we want to move scale the size
-		// our rotation animation is being handled by our css animation
 		d3.active(this)
 				.attrTween('transform', scaleFn())
 				.attrTween('opacity', opacityFn())
