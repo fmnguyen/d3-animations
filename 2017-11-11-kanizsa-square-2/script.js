@@ -93,6 +93,7 @@ path.data(data)
 						return 'translate(' + [x0, y0] + ')rotate(0, 0, 0)';
 					})
 				.transition(t)
+					.delay(500)
 					.attr('transform', function(d) {
 						var evenRow = d.b % 2 === 0,
 						x0 = evenRow ? d.a * D + d.a * padding + D: (d.a + 1) * D + (d.a + 1) * padding + D,
@@ -116,10 +117,10 @@ path.data(data)
 						// i'm sure there's a way easier / nicer way to doing this...
 
 						if (d.angle == π) {
-							x0 = evenRow ? (d.a + 1) * D + (d.a + 1) * padding : (d.a + 2) * D + (d.a + 2) * padding + D
+							x0 = evenRow ? (d.a - 1) * D + (d.a - 1) * padding : (d.a) * D + (d.a) * padding + D
 							y0 = (d.b + 1) * D + (d.b + 1) * padding + D
 						} else if(d.angle == π / 2) {
-							x0 = evenRow ? (d.a - 1) * D + (d.a - 1) * padding + D : (d.a) * D + (d.a) * padding + D
+							x0 = evenRow ? (d.a + 1) * D + (d.a + 1) * padding + D : (d.a + 2) * D + (d.a + 2) * padding + D
 							y0 = (d.b + 1) * D + (d.b + 1) * padding + D
 						} else if(d.angle == 3 * π / 2) {
 							x0 = evenRow ? (d.a - 1) * D + (d.a - 1) * padding + D : (d.a) * D + (d.a) * padding + D,
@@ -129,27 +130,6 @@ path.data(data)
 							y0 = (d.b - 1) * D + (d.b - 1) * padding + D
 						}
 						return 'translate(' + [x0, y0] + ')rotate(90, 0, 0)';
-					})
-				.transition(v)
-					.attr('transform', function(d) {
-						var evenRow = d.b % 2 === 0,
-							x0, y0;
-
-						if (d.angle == π) {
-							x0 = evenRow ? (d.a + 1) * D + (d.a + 1) * padding : (d.a + 2) * D + (d.a + 2) * padding + D
-							y0 = (d.b + 1) * D + (d.b + 1) * padding + D
-						} else if(d.angle == π / 2) {
-							x0 = evenRow ? (d.a - 1) * D + (d.a - 1) * padding + D : (d.a) * D + (d.a) * padding + D
-							y0 = (d.b + 1) * D + (d.b + 1) * padding + D
-						} else if(d.angle == 3 * π / 2) {
-							x0 = evenRow ? (d.a - 1) * D + (d.a - 1) * padding + D : (d.a) * D + (d.a) * padding + D,
-							y0 = (d.b - 1) * D + (d.b - 1) * padding + D
-						} else if(d.angle == 2 * π) {
-							x0 = evenRow ? (d.a + 1) * D + (d.a + 1) * padding + D : (d.a + 2) * D + (d.a + 2) * padding + D,
-							y0 = (d.b - 1) * D + (d.b - 1) * padding + D
-						}
-
-						return 'translate(' + [x0, y0] + ')rotate(0, 0, 0)';
 					})
 				.transition(t)
 					.delay(500)
@@ -171,7 +151,7 @@ path.data(data)
 							y0 = (d.b - 1) * D + (d.b - 1) * padding + D
 						}
 
-						return 'translate(' + [x0, y0] + ')rotate(0, 0, 0)';
+						return 'translate(' + [x0, y0] + ')rotate(270, 0, 0)';
 					})
 				.transition(t)
 					.delay(500)
