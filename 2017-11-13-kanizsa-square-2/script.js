@@ -150,7 +150,6 @@ path.data(data)
 							x0 = evenRow ? (d.a + 1) * D + (d.a + 1) * padding + D : (d.a) * D + (d.a) * padding + D,
 							y0 = (d.b - 1) * D + (d.b - 1) * padding + D
 						}
-
 						return 'translate(' + [x0, y0] + ')rotate(270, 0, 0)';
 					})
 				.transition(t)
@@ -163,20 +162,3 @@ path.data(data)
 				.transition(v)
 					.on('start', repeat) // after all this is done, we want to repeat this animation
 		});
-
-// d3.timer(function(t) {
-// 	path.attr('transform', function(d) {
-// 		var start_θ = π / 2;
-// 		var evenRow = d.y % 2 === 0;
-
-// 		var  θ = start_θ + (t / 2000) * π / 2, 	// angle = time (between 0 and 1) * π / 2 (we want to rotate our shape by π / 2 rotations)
-// 			 ƒ = 90 * _sin(θ),
-// 			x0 = D * d.x,										// starting is radius times el, plus the diameter
-// 			y0 = evenRow ? D * d.y / 2	 : 	 D * (d.y - 1) / 2;	// y0 = radius in height, plus r times the data / rows
-
-// 		if(evenRow)
-// 			return 'rotate(' + [ƒ, x0 + r, y0] + ')';
-// 		else
-// 			return 'rotate(' + [ƒ, x0, y0 + r] + ')';
-// 	});
-// })
