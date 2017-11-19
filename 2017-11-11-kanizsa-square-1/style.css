@@ -1,21 +1,9 @@
-path {
-  shape-rendering: geometricPrecision; }
-
-.background {
+svg {
   position: absolute;
-  width: 600px;
-  height: 600px;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: #F7F7F7; }
-
-.svg {
-  -webkit-animation: rotating 22s linear infinite;
-  -moz-animation: rotating 22s linear infinite;
-  -ms-animation: rotating 22s linear infinite;
-  -o-animation: rotating 22s linear infinite;
-  animation: rotating 22s linear infinite; }
+  background-color: #d3d3d3; }
 
 @-webkit-keyframes rotating {
   from {

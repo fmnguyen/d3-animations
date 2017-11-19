@@ -1,3 +1,11 @@
+svg {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #d3d3d3;
+}
+
 @mixin transform($transforms) {
 	-webkit-transform: $transforms;
 	   -moz-transform: $transforms;
@@ -12,26 +20,6 @@
 	    -ms-animation: $animations;
 		 -o-animation: $animations;
           	animation: $animations;
-}
-
-path {
-	shape-rendering: geometricPrecision;
-}
-
-.background {
-	position: absolute;
-	width: 600px;
-	height: 600px;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	background-color: #F7F7F7;
-	//background-color: #d3d3d3;
-	//background-color: white;
-}
-
-.svg {
-	@include animation(rotating 22s linear infinite);
 }
 
 // Safari and Chrome
