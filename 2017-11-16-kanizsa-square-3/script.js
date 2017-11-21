@@ -8,13 +8,13 @@
  *
  */
 
-var n = 15,		 // number of rows
+var n = 8,		 // number of rows
 	w = h = 600, // width and height
-	r = h / 40,
+	r = h / n,
 	D = r * 2,
-	col = w / D - 1,
-	row = h / D - 1,
-	padding = 0;
+	col = 2,
+	row = 2,
+	padding = 10;
 
 var π = Math.PI;
 
@@ -29,8 +29,8 @@ function sin(val) {
 
 var data = d3.range(0, row * col)
 			.map(function(d) {
-				var a = d % row + 1
-				var b = Math.floor(d / col) + 1
+				var a = d % row
+				var b = Math.floor(d / col)
 				var angle;
 
 				if (a % 2 == 0) {
@@ -46,15 +46,15 @@ var data = d3.range(0, row * col)
 				}
 				return { a: a, b: b, angle: angle }
 			});
+			console.log(data)
 
-var data2 = d3.range(0, h / D * (col + 1) / 2, 2)
+var data2 = d3.range(0, 4)
 			.map(function(d) {
-				var a = d % (h / D) + 1
-				var b = Math.floor(d / (h / D)) * 2 + 1
+				var a = d % row
+				var b = Math.floor(d / col)
 				return { a: a, b: b }
 			})
-
-console.log(data2)
+			console.log(data2)
 
 var t = d3.transition()
 	    	.duration(1000);
@@ -62,9 +62,11 @@ var t = d3.transition()
 var v = d3.transition()
 	    	.duration(1);
 
-var svg = d3.select('body').append('svg')
+var g = d3.select('body').append('svg')
 			.attr('width', w)
 			.attr('height', h)
+			.append('g')
+			.attr('transform', 'translate(' + [w/4, h/4] + ')')
 
 var arc = d3.arc()
 	.innerRadius(0)
@@ -76,31 +78,27 @@ var arc = d3.arc()
 		return d.angle + 3 * π / 2 // 3/4 of a circle for our pac-man like arcs
 	});
 
-var circles = svg.selectAll('circle')
+var circles = g.selectAll('circle')
 
 circles.data(data)
 	.enter().append('circle')
 		.attr('class', 'circle')
 		.attr('r', r)
-		.attr('cx', function(d) { return d.a * D })
-		.attr('cy', function(d) { return d.b * D })
+		.attr('cx', function(d) { return d.a * D + padding * d.a + r })
+		.attr('cy', function(d) { return d.b * D + padding * d.b + r })
 		.attr('data', function(d) { return d.angle * 180 / π })
 		.attr('fill', 'black')
 
-var squares = svg.selectAll('rect')
+var squares = g.selectAll('rect')
 	.data(data2)
 	.enter().append('rect')
 		.attr('class', 'square')
-		.attr('height', D)
-		.attr('width', D)
-		.attr('x', function(d) { return d.a * D })
-		.attr('y', function(d) { return d.b * D })
-		.attr('fill', '#d3d3d3')
+		.attr('height', r + padding / 2)
+		.attr('width', r + padding / 2)
+		.attr('x', function(d) { return d.a * r + r })
+		.attr('y', function(d) { return d.b * r + r })
+		.attr('fill', 'white')
 		.attr('data', function(d) { return [d.a, d.b] })
-	.transition(t)
-		.attr('x', function(d) { return (d.a - 1) * D })
-		.attr('y', function(d) { return (d.b - 1) * D })
-		.attr('transform', function(d) { console.log(d); return 'translate(0,0)rotate(90)' })
 	//.transition(t)
 		// .on('start', function repeat() {
 		// 	d3.active(this)
